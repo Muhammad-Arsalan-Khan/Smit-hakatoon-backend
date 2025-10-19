@@ -3,7 +3,7 @@ const Router = express.Router()
 import { signup , login, verifyEmailOTP, resendEmail, logout } from "../controller/auth/auth.js"
 import { getDataByAdmin, createDataByAdmin, updateDataByAdmin, modifyDataByAdmin, deleteDataByAdmin } from "../controller/admin/admin.js"
 // import {getData, createData, updateData, modifyData, deleteData} from "../controller/user/user.js"
-import { getData } from "../controller/user/user.js"
+import { getData, getTodayChat, getUserHistory, deleteMessage } from "../controller/user/user.js"
 import { authCheck } from "../middleware/authcheck.js"
 import { authCheckAdmin } from "../middleware/admin/authcheck.js"
 import upload from "../middleware/multer/multer.js"
@@ -18,9 +18,12 @@ Router.post("/auth/logout", authCheck, logout)
 
 //user
 Router
-  .route("/analyze-combined")
+  .route("/analyze-combined/:id")
   .post(upload.single("medicalReportFile"),  getData)  //[authCheck, upload.single("image")]
-  // .get(authCheck,   getData)
+  
+Router.get("/today-chat/:id", getTodayChat);
+Router.get("/history/:id", getUserHistory);
+Router.delete("/message/:id", deleteMessage);
   
 
 // Router
